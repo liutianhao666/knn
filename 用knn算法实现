@@ -1,0 +1,26 @@
+rom sklearn.datasets import load_iris
+from  sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+iris = load_iris()
+# 访问数据与标签
+data = iris.data       # 特征数据（150x4的numpy数组）
+target = iris.target   # 类别标签（0/1/2对应三种鸢尾花）
+feature_names = iris.feature_names  # 特征名称
+target_names = iris.target_names    # 类别名称
+
+def main():
+    X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=1 / 3, random_state=10)
+    knn_mode=KNeighborsClassifier()
+    knn_mode.fit(X_train,y_train)
+    accuracy=knn_mode.score(X_test,y_test)
+    print(f"预测准确率：{accuracy*100:.2f}")
+
+    test_sample_feat=[X_test[0]]
+    y_true=y_test[0]
+    y_pred=knn_mode.predict(test_sample_feat)
+    print(f"真是标签{y_true}，预测标签{y_pred}")
+    print(f"{test_sample_feat}")
+    print(f"{X_test[0]}")
+
+if __name__ == '__main__':
+    main()
